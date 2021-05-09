@@ -1,49 +1,56 @@
 <template>
   <div class="w-full">
     <div class="flex">
-      <div class="w-9/20 text-gray-400 text-xs">
+      <div class="text-xs text-gray-400 w-9/20">
         <figure class="flex items-center flex-nowrap">
-          <div class="grid mr-4 w-18 h-18 rounded border border-gray-300">
+          <div class="grid mr-4 border border-gray-300 rounded w-18 h-18">
             <img
-              class="w-100 h-100 object-cover"
-              src="@/assets/images/shirt.png"
+              class="object-cover w-100 h-100"
+              :src="require('@/assets/images/' + imageUrl + '')"
               alt="item-avatar"
             />
           </div>
           <div>
-            <h2 class="text-indigo-600 font-bold normal-case text-base">Shirt</h2>
-            <p class="tracking-wide">Product code: X7R2OPX</p>
+            <h2 class="text-base font-bold text-indigo-600 normal-case">{{ title }}</h2>
+            <p class="tracking-wide">Product code: {{ code }}</p>
           </div>
         </figure>
       </div>
 
-      <div class="w-1/5 text-gray-400 text-xs uppercase flex items-center justify-center">
-        <button class="h-10 px-2 border-0 text-xl text-indigo-600 font-bold focus:outline-none">
+      <div class="flex items-center justify-center w-1/5 text-xs text-gray-400 uppercase">
+        <button
+          @click="removeFromCart(code)"
+          class="h-10 px-2 text-xl font-extrabold text-indigo-600 border-0 focus:outline-none"
+        >
           -
         </button>
         <input
-          class="appearance-none border rounded w-10 h-10 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="w-10 h-10 px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
           type="text"
+          :value="productQuantity(code)"
         />
-        <button class="h-10 px-2 border-0 text-xl text-indigo-600 font-bold focus:outline-none">
+        <button
+          @click="addToCart(code)"
+          class="h-10 px-2 text-xl font-extrabold text-indigo-600 border-0 focus:outline-none"
+        >
           +
         </button>
       </div>
 
-      <div class="w-1/5 text-gray-400 text-xs uppercase flex items-center justify-center">
+      <div class="flex items-center justify-center w-1/5 text-xs text-gray-400 uppercase">
         <span class="text-base text-black">
-          20
+          {{ parseFloat(price) }}
         </span>
-        <span class="text-base text-black ml-2">
+        <span class="ml-2 text-base text-black">
           €
         </span>
       </div>
 
-      <div class="w-3/10 text-gray-400 text-xs uppercase flex items-center justify-center">
+      <div class="flex items-center justify-center text-xs text-gray-400 uppercase w-3/10">
         <span class="text-base text-black">
-          20
+          {{ price * productQuantity(code) }}
         </span>
-        <span class="text-base text-black ml-2">
+        <span class="ml-2 text-base text-black">
           €
         </span>
       </div>
@@ -52,8 +59,23 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'shop-item',
+  props: {
+    code: String,
+    title: String,
+    price: String,
+    imageUrl: String,
+  },
+  computed: {
+    ...mapState(['cart', 'products']),
+    ...mapGetters(['productQuantity']),
+  },
+  methods: {
+    ...mapActions(['addToCart', 'removeFromCart']),
+  },
 };
 </script>
 
