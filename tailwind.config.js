@@ -6,6 +6,9 @@ module.exports = {
       backgroundColor: {
         'dark-purple': '#212240',
       },
+      gridTemplateColumns: {
+        'semi-auto': '1fr auto',
+      },
       width: {
         '18': '4.5rem',
         '3/10': '15%',
