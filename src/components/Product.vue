@@ -1,9 +1,9 @@
 <template>
   <div class="w-full">
     <div class="flex">
-      <div class="text-xs text-gray-400 w-9/20">
-        <figure class="flex items-center flex-nowrap">
-          <div class="grid mr-4 border border-gray-300 rounded w-18 h-18">
+      <div class="w-1/3 text-xs text-gray-400 lg:w-9/20">
+        <figure class="flex flex-col lg:flex-row lg:items-center flex-nowrap">
+          <div class="grid mb-2 border border-gray-300 rounded lg:mb-0 lg:mr-4 w-18 h-18">
             <img
               class="object-cover w-full h-full"
               :src="require('@/assets/images/' + imageUrl + '')"
@@ -17,7 +17,7 @@
         </figure>
       </div>
 
-      <div class="flex items-center justify-center w-1/5 text-xs text-gray-400 uppercase">
+      <div class="flex items-center justify-center w-3/12 text-xs text-gray-400 uppercase lg:w-1/5">
         <button
           @click="removeFromCart(code)"
           class="h-10 px-2 text-xl font-extrabold text-indigo-600 border-0 focus:outline-none"
@@ -37,13 +37,13 @@
         </button>
       </div>
 
-      <div class="flex items-center justify-center w-1/5 text-xs text-gray-400 uppercase">
+      <div class="flex items-center justify-center w-3/12 text-xs text-gray-400 uppercase lg:w-1/5">
         <span class="text-base text-black">
           {{ currency(parseFloat(price)) }}
         </span>
       </div>
 
-      <div class="flex items-center justify-center text-xs text-gray-400 uppercase w-3/10">
+      <div class="flex items-center justify-center w-1/6 text-xs text-gray-400 uppercase lg:w-3/10">
         <span class="text-base text-black">
           {{ currency(price * productQuantity(code)) }}
         </span>

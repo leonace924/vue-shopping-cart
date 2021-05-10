@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-col w-full px-8 py-10 bg-gray-100 rounded-r lg:h-full lg:w-64 xl:w-72">
+  <div
+    class="flex flex-col w-full p-6 bg-gray-100 rounded-r lg:py-10 lg:px-8 lg:h-full lg:w-64 xl:w-72"
+  >
     <h1 class="pb-4 text-lg font-medium text-black border-b border-gray-300">Order Summary</h1>
     <div class="flex justify-between py-8 border-b border-gray-300">
       <span class="text-sm text-gray-700">{{ cartSize }} Items</span>
