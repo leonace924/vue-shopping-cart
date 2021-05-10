@@ -16,7 +16,7 @@
         <div v-for="rule in discountRules || []" :key="rule.name" class="flex justify-between">
           <span class="text-sm text-gray-700">{{ rule.name }}</span>
           <span class="text-sm font-semibold">
-            {{ currency(discountProduct(rule.product)) }}
+            {{ currency(getDiscountByProduct(cart, rule.product)) }}
           </span>
         </div>
       </div>
@@ -41,18 +41,26 @@
 </template>
 
 <script>
+import DiscountService from '@/services/DiscountService';
 import { currency } from '@/utils/currency';
 import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'checkout',
   computed: {
-    ...mapState(['cart', 'discountRules']),
-    ...mapGetters(['cartSize', 'cartOriginalPrice', 'cartTotalPrice', 'discountProduct']),
+    ...mapState(['cart']),
+    ...mapGetters(['cartSize', 'cartOriginalPrice', 'cartTotalPrice']),
+  },
+  methods: {
+    getDiscountByProduct(cart, name) {
+      return parseFloat(DiscountService.scanProduct(cart, name) * -1);
+    },
   },
   setup() {
+    const discountRules = DiscountService.getDiscountRules();
     return {
       currency,
+      discountRules,
     };
   },
 };
