@@ -1,62 +1,48 @@
 <template>
-  <div class="px-10 py-8">
-    <h1 class="text-lg text-black font-medium pb-4 border-b border-gray-300">Shopping cart</h1>
-    <div class="w-full">
-      <div class="flex py-8">
-        <div class="w-9/20 text-gray-400 text-xs uppercase">
-          Product details
-        </div>
+  <div class="flex-1 p-10">
+    <h1 class="pb-4 text-lg font-medium text-black border-b border-gray-300">Shopping cart</h1>
+    <div class="flex py-8">
+      <div class="text-xs text-gray-400 uppercase w-9/20">
+        Product details
+      </div>
 
-        <div class="w-1/5 text-gray-400 text-xs uppercase flex justify-center">Quantity</div>
-        <div class="w-1/5 text-gray-400 text-xs uppercase flex justify-center">
-          Price
-        </div>
+      <div class="flex justify-center w-1/5 text-xs text-gray-400 uppercase">Quantity</div>
+      <div class="flex justify-center w-1/5 text-xs text-gray-400 uppercase">
+        Price
+      </div>
 
-        <div class="w-3/10 text-gray-400 text-xs uppercase flex justify-center">
-          Total
-        </div>
+      <div class="flex justify-center text-xs text-gray-400 uppercase w-3/10">
+        Total
       </div>
     </div>
 
-    <div class="w-full">
-      <ShopItem></ShopItem>
+    <div class="grid gap-8">
+      <div v-for="product in products || []" :key="product.id">
+        <Product
+          :title="product.title"
+          :code="product.id"
+          :price="product.price"
+          :imageUrl="product.image"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import ShopItem from '@/components/ShopItem';
+import { mapState } from 'vuex';
+import Product from '@/components/Product';
 
 export default {
   name: 'cart',
   components: {
-    ShopItem,
+    Product,
   },
   data() {
-    return {
-      totalPrice: 0,
-      cart: [],
-      products: [
-        {
-          code: 'X7R2OPX',
-          title: 'Shirt',
-          price: 60,
-          image: '@/assets/images/shirt.png',
-        },
-        {
-          code: 'X2G2OPZ',
-          title: 'Mug',
-          price: 5,
-          image: '@/assets/images/mug.png',
-        },
-        {
-          code: 'X3W2OPY',
-          title: 'Cap',
-          price: 10,
-          image: '@/assets/images/cap.png',
-        },
-      ],
-    };
+    return {};
+  },
+  computed: {
+    ...mapState(['cart', 'products']),
   },
 };
 </script>
