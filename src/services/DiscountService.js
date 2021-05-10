@@ -16,19 +16,15 @@ let discountRules = [
 class DiscountService {
   static scanProduct(cart, productName) {
     let product = cart.find((product) => product.title === productName);
+    if (!product || !product?.quantity) return 0;
+
     let discount = discountRules.find((rule) => rule.product === productName);
 
-    if (!product?.quantity || !product) return 0;
-
-    if (productName === 'Shirt') {
-      return product?.quantity >= discount.amount
-        ? product.price * discount.rate * product?.quantity
-        : 0;
+    if (productName === 'Shirt' && product?.quantity >= discount.amount) {
+      return product.price * discount.rate * product?.quantity;
     }
-    if (productName === 'Mug') {
-      return product?.quantity >= discount.amount
-        ? product.price * discount.rate * (Math.floor(product?.quantity / 2) * 2)
-        : 0;
+    if (productName === 'Mug' && product?.quantity >= discount.amount) {
+      return product.price * discount.rate * (Math.floor(product?.quantity / 2) * 2);
     }
     return 0;
   }
